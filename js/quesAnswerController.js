@@ -1,7 +1,7 @@
-myApp.controller('quesAnswerCtrl',function($scope, $http, $q, $route, $routeParams, $rootScope){
+myApp.controller('quesAnswerCtrl',function($scope, $http, $q, $route, $routeParams, $cookies){
 
   var vm = this;
-  vm.userid = $rootScope.userId;
+  vm.userid = $cookies.get('userId');
   vm.quesId = $routeParams.quesId;
 
   vm.userAnswerText = null;

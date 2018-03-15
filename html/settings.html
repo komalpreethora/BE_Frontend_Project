@@ -60,7 +60,7 @@
         <a class="nav-link " data-toggle="tab" data-target="#experttopics">Expert</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" data-target="#interesttopics">Interest</a>
+        <a class="nav-link" data-toggle="tab" data-target="#interesttopics">Novice</a>
       </li>
     </ul>
 
@@ -136,7 +136,7 @@
                    <br>
 
                    <div class="page-header">
-                     <h4>Preferred Time</h4>
+                     <h4>Preferred Time Duration</h4>
                    </div>
 
                    <div class="input-group">
@@ -148,12 +148,28 @@
                       </datalist>
 
                       <span class="input-group-addon">Minutes</span>
-                      <input list="minutes" class="form-control" placeholder="24 hours system"  ng-model="timeArr[1]" ng-disabled="isEditable" id="minute">
+                      <input list="minutes" class="form-control" ng-model="timeArr[1]" ng-disabled="isEditable" id="minute">
                         <datalist id="minutes">
                           <option ng-repeat="min in minValues">{{min}}</option>
                         </datalist>
                     </div>
                     <br>
+                    <div class="input-group">
+
+                      <!-- You can put a for loop for the options I realised quite late how loong it is -->
+                      <span class="input-group-addon">Hour</span>
+                      <input list="hour" class="form-control" placeholder="24 hours system" id="hours" ng-model="timeArr_end[0]" ng-disabled="isEditable" >
+                       <datalist id="hour">
+                         <option ng-repeat="hour in hourValues">{{hour}}</option>
+                       </datalist>
+
+                       <span class="input-group-addon">Minutes</span>
+                       <input list="minutes" class="form-control"  ng-model="timeArr_end[1]" ng-disabled="isEditable" id="minute">
+                         <datalist id="minutes">
+                           <option ng-repeat="min in minValues">{{min}}</option>
+                         </datalist>
+                     </div>
+                     <br>
                  </form>
                  <button type="submit" class="btn btn-primary click" ng-click="editProfile()">{{buttonText}}</button>
 

@@ -1,8 +1,8 @@
-myApp.controller('settingsCtrl',function($scope,$q,$http,$rootScope){
+myApp.controller('settingsCtrl',function($scope,$q,$http,$cookies){
 
   //TO-DO: Bind userid to login
 
-  $scope.userid = $rootScope.userId;
+  $scope.userid = $cookies.get('userId');
   $scope.isEditable = true; //for enabling editing of personal details+preferences
   $scope.isEditableE = true; //for enabling editing of expertise tab info
   $scope.isEditableI = true; //for enabling editing of interest tab info
@@ -113,6 +113,7 @@ myApp.controller('settingsCtrl',function($scope,$q,$http,$rootScope){
       $scope.in_endTime = api_pref_response.data.endTime;
       //--Splitting in_startTime to get HH and MM
       $scope.timeArr = $scope.in_startTime.split(':');
+      $scope.timeArr_end = $scope.in_endTime.split(':');
     }
   });
 
@@ -363,7 +364,7 @@ myApp.controller('settingsCtrl',function($scope,$q,$http,$rootScope){
       //----2. Preferences to be submitted
 
       url = "http://localhost:8080/v1.0/users";
-      var post_pref_deferred = $q.defer();
+      var post_prof_deferred = $q.defer();
       var data = {
         userid: $scope.userid,
         contact: $scope.in_contact,
@@ -377,31 +378,31 @@ myApp.controller('settingsCtrl',function($scope,$q,$http,$rootScope){
       $http.post(url,JSON.stringify(data))
       .then(function(api_response)
       {
-          post_pref_deferred.resolve(api_response);
+          post_prof_deferred.resolve(api_response);
       },
       function(api_response)
       {
-        post_pref_deferred.reject(api_response);
+        post_prof_deferred.reject(api_response);
       });
 
       url = "http://localhost:8080/v1.0/userpreference/"+$scope.userid;
-      var put_pref_deferred =  $q.defer();
+      var post_pref_deferred =  $q.defer();
       var data = {
         communicationMode: $scope.in_comm_mode,
         communicationLang: $scope.in_comm_lang,
-        startTime: $scope.in_startTime,
-        endTime: $scope.in_endTime,
+        startTime: ""+$scope.timeArr[0]+":"+$scope.timeArr[1]+":"+$scope.timeArr[2],
+        endTime: ""+$scope.timeArr_end[0]+":"+$scope.timeArr_end[1]+":"+$scope.timeArr_end[2],
         userid: $scope.userid
       };
 
-      console.log("Data: ",data);
-      $http.put(url,JSON.stringify(data))
+      console.log("Data for post pref: ",data);
+      $http.post(url,JSON.stringify(data))
       .then(function(api_response){
-        put_pref_deferred.resolve(api_response);
+        post_pref_deferred.resolve(api_response);
         console.log(api_response);
       },
       function(api_response){
-        put_pref_deferred.reject(api_response);
+        post_pref_deferred.reject(api_response);
       });
 
       $scope.isEditable = true;

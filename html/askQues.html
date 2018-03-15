@@ -34,7 +34,7 @@
               </a>
           </li>
           <li class="dropdown ddalignright">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
                   <ul class="dropdown-menu allowscroll" id="notif">
                     <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
                     <li role="separator" class="divider"></li>
@@ -101,16 +101,31 @@
     </div>
     <div class="input-group" ng-if="$ctrl.flag == true">
       <!-- You can put a for loop for the options I realised quite late how loong it is -->
+      <span class="input-group-addon">Year</span>
+      <input type="text" class="form-control" ng-model="$ctrl.year" ng-disabled="true">
+
+      <span class="input-group-addon">Month</span>
+      <input list="month" class="form-control" id="months" ng-model="$ctrl.month" ng-change="$ctrl.changeInMonth($ctrl.month)">
+       <datalist id="month">
+         <option ng-repeat="month in $ctrl.monthValues">{{month}}</option>
+       </datalist>
+
+       <span class="input-group-addon">Day</span>
+       <input list="day" class="form-control" id="days" ng-model="$ctrl.day">
+        <datalist id="day">
+          <option ng-repeat="day in $ctrl.dayValues">{{day}}</option>
+        </datalist>
+
       <span class="input-group-addon">Hour</span>
       <input list="hour" class="form-control" placeholder="24 hours system" id="hours" ng-model="$ctrl.hour" >
        <datalist id="hour">
-         <option ng-repeat="hour in hourValues">{{hour}}</option>
+         <option ng-repeat="hour in $ctrl.hourValues">{{hour}}</option>
        </datalist>
 
        <span class="input-group-addon">Minutes</span>
        <input list="minutes" class="form-control" placeholder="24 hours system"  ng-model="$ctrl.min" id="minute">
          <datalist id="minutes">
-           <option ng-repeat="min in minValues">{{min}}</option>
+           <option ng-repeat="min in $ctrl.minValues">{{min}}</option>
          </datalist>
      </div>
 
