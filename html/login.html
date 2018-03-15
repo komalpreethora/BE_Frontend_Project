@@ -158,6 +158,9 @@
           <div ng-if="$ctrl.error_flag == true">
             <p class="text-center" style="color: white;">{{$ctrl.msg}}</p>
           </div>
+          <div ng-if="$ctrl.missing_flag == true">
+            <p class="text-center" style="color: white;">{{$ctrl.missing_msg}}</p>
+          </div>
         </div>
       </div>
     </div>

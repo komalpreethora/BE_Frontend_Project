@@ -72,18 +72,18 @@
       </li>
     </ul>-->
     <ul class="nav nav-tabs">
-      <li class="nav-item active show">
-        <a class="nav-link" data-toggle="tab" data-target="#novice">Novice</a>
-      </li>
       <li class="nav-item ">
         <a class="nav-link " data-toggle="tab" data-target="#expert">Expert</a>
       </li>
+      <li class="nav-item active show">
+        <a class="nav-link" data-toggle="tab" data-target="#novice">Novice</a>
+      </li>
       <li class="dropdown ddalignright">
-            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#!/settings">Profile</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Logout</a></li>
+              <li ng-click="logoutUser()"><a>Logout</a></li>
             </ul>
       </li>
     </ul>
@@ -142,11 +142,7 @@
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li class="active"><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
+                  <li ng-class="{'active': pageEActive[page.id]}" ng-repeat ="page in pageEArr"><a ng-click="expertCards(page.id)">{{page.id}}</a></li>
                   <li>
                     <a href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
@@ -210,11 +206,7 @@
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li class="active"><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
+                  <li ng-class="{'active': pageIActive[page.id]}" ng-repeat ="page in pageIArr"><a ng-click="interestCards(page.id)">{{page.id}}</a></li>
                   <li>
                     <a href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
