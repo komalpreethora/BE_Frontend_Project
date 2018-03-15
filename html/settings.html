@@ -1,0 +1,313 @@
+<div ng-app="myApp" ng-controller="settingsCtrl">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#!/home">UCAN</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav alignright">
+          <li>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input placeholder="Search" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </form>
+          </li>
+          <li>
+            <a href="#"><!-- to put space between home and search--></a>
+          </li>
+          <li >
+            <a href="#!/home">
+              <i class="fa fa-home"></i>
+              </a>
+          </li>
+          <li>
+            <a href="#!/askQues">
+              <i class="fa fa-plus"></i>
+              </a>
+          </li>
+          <li class="dropdown ddalignright">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
+                  <ul class="dropdown-menu allowscroll" id="notif">
+                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+                  </ul>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <div class="container theme-showcase" role="main">
+   <nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item active show">
+        <a class="nav-link" data-toggle="tab" data-target="#personal">Personal</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link " data-toggle="tab" data-target="#experttopics">Expert</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" data-target="#interesttopics">Interest</a>
+      </li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="personal">
+       <p></p>
+          <!-- Page Content -->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="page-header">
+                  <h2>Personal Information</h2>
+                </div>
+                <div class="col-md-8">
+
+                 <form >
+                   <div class="input-group">
+                     <span class="input-group-addon">Name</span>
+                     <input type="text" class="form-control" placeholder="Name" id="name" ng-model="in_name" ng-disabled="isEditable">
+                   </div>
+                   <br>
+
+                   <div class="input-group">
+                     <span class="input-group-addon" >Username</span>
+                     <input type="text" class="form-control" placeholder="Username" id="username" ng-model="in_userName" ng-disabled="isEditable">
+                   </div>
+                   <br>
+
+                   <div class="input-group">
+                     <span class="input-group-addon" >Password</span>
+                     <input type="password" class="form-control" placeholder="Password" id="password" ng-model="in_password" ng-disabled="isEditable">
+                      <span class="input-group-addon">
+                        <input type="checkbox" aria-label=""  id="showpass" ng-click="displayPassword()">Show Password
+                      </span>
+                   </div>
+                   <br>
+
+                   <div class="input-group">
+                     <span class="input-group-addon" >Email ID</span>
+                     <input type="email" class="form-control" placeholder="johndoe@example.com" id="emailid" ng-model="in_email" ng-disabled="isEditable">
+                   </div>
+                   <br>
+                   <div class="input-group">
+                     <span class="input-group-addon" >Contact No.</span>
+                     <input type="text" class="form-control" placeholder="Number" id="number" ng-model="in_contact" ng-disabled="isEditable">
+                   </div>
+                   <br>
+                   <div class="input-group">
+                     <span class="input-group-addon" >Country</span>
+                     <input type="text" class="form-control" placeholder="Country" id="country" ng-model="in_country" ng-disabled="isEditable">
+                   </div>
+
+                   <div class="page-header">
+                     <h4>Preferred Language</h4>
+                   </div>
+                   <div class="input-group" ng-repeat="lang in langArray">
+                       <span class="input-group-addon">
+                        <input type="radio" name="optradio" ng-model="in_comm_lang" ng-value="lang.name" ng-disabled="isEditable">
+                       </span>
+                       <label class="form-control ">{{lang.name}}</label>
+                   </div>
+                   <br>
+
+                   <div class="page-header">
+                     <h4>Preferred Communication Mode</h4>
+                   </div>
+                   <div class="input-group" ng-repeat="mode in commMode">
+                       <span class="input-group-addon">
+                        <input type="radio" name="optradio1" ng-model="in_comm_mode" ng-value="mode.name" ng-disabled="isEditable">
+                       </span>
+                       <label class="form-control ">{{mode.name}}</label>
+                   </div>
+                   <br>
+
+                   <div class="page-header">
+                     <h4>Preferred Time</h4>
+                   </div>
+
+                   <div class="input-group">
+                     <!-- You can put a for loop for the options I realised quite late how loong it is -->
+                     <span class="input-group-addon">Hour</span>
+                     <input list="hour" class="form-control" placeholder="24 hours system" id="hours" ng-model="timeArr[0]" ng-disabled="isEditable" >
+                      <datalist id="hour">
+                        <option ng-repeat="hour in hourValues">{{hour}}</option>
+                      </datalist>
+
+                      <span class="input-group-addon">Minutes</span>
+                      <input list="minutes" class="form-control" placeholder="24 hours system"  ng-model="timeArr[1]" ng-disabled="isEditable" id="minute">
+                        <datalist id="minutes">
+                          <option ng-repeat="min in minValues">{{min}}</option>
+                        </datalist>
+                    </div>
+                    <br>
+                 </form>
+                 <button type="submit" class="btn btn-primary click" ng-click="editProfile()">{{buttonText}}</button>
+
+              </div>
+            </div>
+            </div>
+            <!-- /.row -->
+          </div>
+        <!-- /.container -->
+      </div>
+
+
+      <div class="tab-pane fade" id="experttopics">
+        <p></p>
+        <!-- Page Content -->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+               <div class="page-header">
+                  <h2>Expert's Information</h2>
+                </div>
+                <div class="page-header">
+                  <h4>Topics</h4>
+                </div>
+                <div class="btn-toolbar">
+                  <button type="button" ng-class="{'btn': true, 'btn-default': btnDE[topic.id], 'btn-primary': btnPE[topic.id] }" ng-disabled="isEditableE" name={{topic.id}} ng-repeat="topic in topicArr" ng-model="selectedTopicE[topic.id]" ng-click="buttonEClick()">{{topic.name}} </button>
+                </div>
+                <button type="submit" class="btn btn-primary click alignright" style="display: block;" id="eptopbuttonen" ng-click="editExpert()">{{buttonTextE}}</button>
+                &nbsp;
+
+                <div class="page-header">
+                   <h4>Answers Given</h4>
+                </div>
+
+                  <div class="panel panel-primary" ng-if="ans_flag === true" ng-repeat="ans in ansArr">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">{{ans.questiontitle}}</h3>
+                    </div>
+                    <div class="panel-body">
+                       <div class="row">
+                         <div class="col-md-12">
+
+                             <div class="col-md-1">
+                               <i class="fa fa-angle-up">{{ans.upvote}}</i>
+                             </div>
+
+                             <div class="col-md-11">
+                               <p>{{ans.answertext}}</p>
+                               <p class="text-muted col-md-12">
+                                  <a href="#!/question/{{ans.questionid}}" class="btn btn-primary alignright ">Read More &rarr;</a>
+                               </p>
+                               <div class="text-muted">
+                                 Posted on {{ans.timestamp}} by
+                                 <a href="#">{{ans.username}}</a>
+                               </div>
+                             </div>
+                             <div class="col-md-1">
+                               <i class="fa fa-angle-down">{{ans.downvote}}</i>
+                             </div>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <div ng-if="ans_flag === false">
+                   <p class="text-muted">No answers given yet!</p>
+                 </div>
+
+                </div>
+                <!-- /.col-md-12 -->
+              </div>
+              <!-- /.row -->
+            </div>
+          <!-- /.container -->
+      </div>
+
+
+      <div class="tab-pane fade" id="interesttopics">
+        <p></p>
+        <!-- Page Content -->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+              <div class="page-header">
+                  <h2>Novice's Information</h2>
+                </div>
+
+                <div class="page-header">
+                  <h4>Topics</h4>
+                </div>
+                <div class="btn-toolbar">
+                  <button type="button" ng-class="{'btn': true, 'btn-default': btnDI[topic.id], 'btn-primary': btnPI[topic.id] }" ng-disabled="isEditableI" name={{topic.id}} ng-repeat="topic in topicArr" ng-model="selectedTopicI[topic.id]" ng-click="buttonIClick()">{{topic.name}} </button>
+                </div>
+                <button type="submit" class="btn btn-primary click alignright" style="display: block;" id="eptopbuttonen" ng-click="editInterest()">{{buttonTextI}}</button>
+                &nbsp;
+
+
+                &nbsp;
+                <div class="page-header">
+                   <h4>Questions Asked</h4>
+                 </div>
+
+                 <div class="panel panel-primary" ng-if="ques_flag === true" ng-repeat="ques in quesArr">
+                   <div class="panel-heading">
+                     <h3 class="panel-title">{{ques.title}}</h3>
+                   </div>
+
+                    <div class="panel-body">
+                       <div class="row">
+                         <div class="col-md-12">
+
+                             <div class="col-md-1">
+                               <i class="fa fa-angle-up">{{ques.upvote}}</i>
+                             </div>
+
+                             <div class="col-md-11">
+                               <p class="text-muted">Tags: <label ng-repeat="tag in ques.tagnamelist">{{tag}}&nbsp;</label>
+                                  <a href="#!/question/{{ques.questionid}}" class="btn btn-primary alignright ">Read More &rarr;</a>
+                               </p>
+                               <div class="text-muted">
+                                 Posted on {{ques.timestamp}} by
+                                 <a href="#">{{ques.username}}</a>
+                               </div>
+                             </div>
+
+
+                             <div class="col-md-1">
+                               <i class="fa fa-angle-down">{{ques.downvote}}</i>
+                             </div>
+
+                             </div>
+                         </div>
+
+                     </div>
+                 </div>
+
+                 <div ng-if="ques_flag === false">
+                   <p class="text-muted">No questions asked yet!</p>
+                 </div>
+
+
+              </div>
+
+
+
+              </div>
+              <!-- /.row -->
+            </div>
+          <!-- /.container -->
+      </div>
+
+    </div>
+  </nav>
+  </div> <!-- /container -->
+
+
+</div>

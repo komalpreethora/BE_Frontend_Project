@@ -1,8 +1,8 @@
-myApp.controller('home',function($scope, $log, $http, $q){
-  //--Initialisation
+myApp.controller('homeCtrl',function($scope, $http, $q, $rootScope){
   //*TO-DO: Bind user id when user logs in to maintain a session
   //        Also bind page number for pagination of questions
-  $scope.userid = 1;
+  $scope.userid = $rootScope.userId;
+  console.log("User id: ",$scope.userid);
   $scope.pageNo = 1;
 
   $scope.quesIArr=[];
@@ -18,7 +18,6 @@ myApp.controller('home',function($scope, $log, $http, $q){
   $http.get(url)
 	.then(function(api_ques_i_response)
 	{
-    console.log("Int Response: ",api_ques_i_response);
 		deferred.resolve(api_ques_i_response);
 	},
 	function(api_ques_i_response)
@@ -29,7 +28,6 @@ myApp.controller('home',function($scope, $log, $http, $q){
 	deferred.promise.then(function(api_ques_i_response)
 	{
 		$scope.length = api_ques_i_response.data.length;
-    console.log("Length: ",$scope.length);
 		if($scope.length === 0)
 		{
 			$scope.ques_i_flag = false;
@@ -46,7 +44,8 @@ myApp.controller('home',function($scope, $log, $http, $q){
           downvote:  api_ques_i_response.data[ind].downvote,
           state:  api_ques_i_response.data[ind].state,
           tagnamelist: api_ques_i_response.data[ind].tagnamelist,
-          timestamp:  api_ques_i_response.data[ind].timestamp
+          timestamp:  api_ques_i_response.data[ind].timestamp,
+          username: api_ques_i_response.data[ind].username
 				});
 			}
 		}
@@ -86,7 +85,8 @@ myApp.controller('home',function($scope, $log, $http, $q){
           downvote:  api_ques_e_response.data[ind].downvote,
           state:  api_ques_e_response.data[ind].state,
           tagnamelist: api_ques_e_response.data[ind].tagnamelist,
-          timestamp:  api_ques_e_response.data[ind].timestamp
+          timestamp:  api_ques_e_response.data[ind].timestamp,
+          username: api_ques_e_response.data[ind].username
 				});
 			}
 		}

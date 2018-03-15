@@ -1,0 +1,207 @@
+<div ng-app="myApp" ng-controller="loginCtrl as $ctrl">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand " href="#page-top">UCAN</a>
+
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#about">About</a></li>
+          <li><a href="#signup">Signup</a></li>
+          <li class="login"><a href="#login">Login</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <header class="masthead">
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-lead-in">Welcome To Our Site!</div>
+        <div class="intro-heading text-uppercase">Have a problem you need solved ?</div>
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#about">Tell Me More</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">About</h2>
+          <h3 class="section-subheading text-muted">UCAN</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="timeline">
+            <li>
+              <div >
+                <img class="img-circle timeline-image" src="img/about/1.jpg" alt="">
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <h4 class="subheading">Have a doubt?</h4>
+                </div>
+                <div class="timeline-body">
+                  <p class="text-muted">If you have a problem in your code and need guidance, ask your query in our awesome community and get the help you require!</p>
+                </div>
+              </div>
+            </li>
+            <li class="timeline-inverted">
+              <div >
+                <img class="img-circle timeline-image" src="img/about/2.jpg" alt="">
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <h4 class="subheading">Guidance according to your need</h4>
+                </div>
+                <div class="timeline-body">
+                  <p class="text-muted">Pick a communication mode, offline or online, according to your requirements.<br>Don't know English? You needn't worry, as our system provides support for various languages.</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <img class="img-circle timeline-image" src="img/about/3.jpg" alt="">
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <h4 class="subheading">Choose your experts</h4>
+                </div>
+                <div class="timeline-body">
+                  <p class="text-muted">You are given control over the experts you want to communicate with. View their stats and rank and make your decision!</p>
+                </div>
+              </div>
+            </li>
+            <li class="timeline-inverted">
+              <div>
+                <img class="img-circle timeline-image" src="img/about/4.jpg" alt="">
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <h4 class="subheading">Ranking of experts</h4>
+                </div>
+                <div class="timeline-body">
+                  <p class="text-muted">Our system categorises a user's ranking in a topic as Beginner, Intermediate, Expert and helps seekers decide the experts they want to communicate with.</p>
+                </div>
+              </div>
+            </li>
+            <li class="timeline-inverted">
+              <div class="timeline-image">
+                <h4>Be a part
+                  <br>of our
+                  <br>community!</h4>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bglight" id="signup">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase" style="color: white;">Sign Up!</h2>
+          <h3 class="section-subheading text-muted " style="color: white;">Become a member of our community!</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <form id="contactForm" name="sentMessage">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input class="form-control" id="name" type="text" placeholder={{$ctrl.name_msg}} ng-model="$ctrl.in_name">
+                  <p class="help-block text-danger"></p>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" id="username" type="text" placeholder={{$ctrl.username_msg}} ng-model="$ctrl.in_username">
+                  <p class="help-block text-danger"></p>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" id="emailid" type="email" placeholder={{$ctrl.email_msg}} ng-model="$ctrl.in_email">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input class="form-control" id="password" type="password" placeholder={{$ctrl.password_msg}} ng-model="$ctrl.in_password">
+                  <p class="help-block text-danger"></p>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="phone" type="tel" placeholder={{$ctrl.phone_msg}} ng-model="$ctrl.in_contact"></input>
+                  <p class="help-block text-danger"></p>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="country" type="text" placeholder={{$ctrl.country_msg}} ng-model="$ctrl.in_country"></input>
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-lg-12 text-center">
+                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit" ng-click="$ctrl.signUp()">Sign up!</button>
+              </div>
+
+            </div>
+          </form>
+          <div ng-if="$ctrl.error_flag == true">
+            <p class="text-center" style="color: white;">{{$ctrl.msg}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="login">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Login!</h2>
+          <h3 class="section-subheading text-muted">Welcome Back!</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <form id="contactForm" name="sentMessage" novalidate>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input class="form-control" id="emailid1" type="email" placeholder={{$ctrl.login_email_msg}} ng-model="$ctrl.login_email">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input class="form-control" id="password" type="password" placeholder={{$ctrl.login_pass_msg}} ng-model="$ctrl.login_password">
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-lg-12 text-center">
+                <div id="success"></div>
+                <br>
+                <br>
+                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit" ng-click="$ctrl.login()">Login!</button>
+              </div>
+              <div ng-if="$ctrl.login_flag == true">
+                &nbsp;
+                <p class="text-center">{{$ctrl.login_msg}}</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

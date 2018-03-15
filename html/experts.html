@@ -1,0 +1,157 @@
+<div ng-app="myApp" ng-controller="expertsCtrl as $ctrl">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#!/home">UCAN</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav alignright">
+          <li>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input placeholder="Search" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </form>
+          </li>
+          <li>
+            <a href="#"><!-- to put space between home and search--></a>
+          </li>
+          <li >
+            <a href="#!/home">
+              <i class="fa fa-home"></i>
+              </a>
+          </li>
+          <li class="active">
+            <a href="#!/askQues">
+              <i class="fa fa-plus"></i>
+              </a>
+          </li>
+          <li class="dropdown ddalignright">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
+                  <ul class="dropdown-menu allowscroll" id="notif">
+                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+                  </ul>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <div class="container theme-showcase" role="main">
+    <div class="page-header aligncenter">
+        <h2>Select your Expert</h2>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <h3>Expert 1</h3>
+            <p>Number of questions answered: 10<br>
+              prefered time of answering 14:30<br>
+              prefered language English
+            </p>
+            <p>
+              <a href="#" class="btn btn-default" role="button" id="expert1">Ask</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <h3>Expert 2</h3>
+            <p>Number of questions answered: 10<br>
+              prefered time of answering 14:30<br>
+              prefered language English
+            </p>
+            <p>
+              <a href="#" class="btn btn-default" role="button" id="expert2">Ask</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <h3>Expert 3</h3>
+            <p>Number of questions answered: 10<br>
+              prefered time of answering 14:30<br>
+              prefered language English
+            </p>
+            <p>
+              <a href="#" class="btn btn-default" role="button" id="expert3">Ask</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <h3>Expert 4</h3>
+            <p>Number of questions answered: 10<br>
+              prefered time of answering 14:30<br>
+              prefered language English
+            </p>
+            <p>
+              <a href="#" class="btn btn-default" role="button" id="expert4">Ask</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <h3>Expert 5</h3>
+            <p>Number of questions answered: 10<br>
+              prefered time of answering 14:30<br>
+              prefered language English
+            </p>
+            <p>
+              <a href="#" class="btn btn-default" role="button" id="expert5">Ask</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <h3>Expert 6</h3>
+            <p>Number of questions answered: 10<br>
+              prefered time of answering 14:30<br>
+              prefered language English
+            </p>
+            <p>
+              <a href="#" class="btn btn-default" role="button" id="expert6">Ask</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <center>
+      <!-- Remove a href, just for redirection purpose-->
+      <a href="../View_question/index.html">
+        <button type="submit" class="btn btn-primary" id="submit"> Ask Question </button>
+      </a>
+    </center>
+
+  </div> <!-- /container -->
+</div>

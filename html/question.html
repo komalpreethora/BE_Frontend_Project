@@ -1,0 +1,138 @@
+<div ng-app="myApp" ng-controller="quesAnswerCtrl as $ctrl">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#!/home">UCAN</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav alignright">
+          <li>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input placeholder="Search" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </form>
+          </li>
+          <li>
+            <a href="#!"><!-- to put space between home and search--></a>
+          </li>
+          <li >
+            <a href="#!/home">
+              <i class="fa fa-home"></i>
+              </a>
+          </li>
+          <li>
+            <a href="#!/askQues">
+              <i class="fa fa-plus"></i>
+              </a>
+          </li>
+          <li class="dropdown ddalignright">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
+            <ul class="dropdown-menu allowscroll" id="notif">
+              <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+
+  <div class="container theme-showcase" role="main">
+
+    <div class="page-header aligncenter">
+        <h2>{{$ctrl.quesTitle}} <small>asked by  {{$ctrl.userName}}</small></h2>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="jumbotron">
+          <div class="row ">
+            <button ng-click="$ctrl.quesUpvote()" class="nooutline">
+              <i class="fa fa-angle-up fa-4x" >
+              </i>
+              <p>{{$ctrl.q_upvote}}</p>
+            </button>
+
+          </div>
+          <div class="col-md-offset-1 ">
+            <p>{{$ctrl.quesText}}</p>
+          </div>
+
+          <div class="row">
+            <button ng-click="$ctrl.quesDownvote()" class="nooutline">
+              <p style="margin-bottom: 0;">{{$ctrl.q_downvote}}</p>
+              <i class="fa fa-angle-down fa-4x" ></i>
+            </button>
+
+          </div>
+          <h5 style="text-align: right;"> <i> Status: {{$ctrl.state}} </i></h5>
+          <!--<h5 style="text-align: right;"> <i> Time: {{$ctrl.timestamp}} </i></h5>-->
+
+         </div>
+      </div>
+     </div>
+
+
+      <div class="page-header aligncenter">
+        <h2>Answers</h2>
+      </div>
+
+      <div ng-if="$ctrl.ans_flag == true">
+      <div class="row" ng-repeat="ans in $ctrl.ansArray">
+        <div class="col-md-12">
+          <div class="jumbotron">
+            <div class="row">
+              <button class="nooutline" ng-click="$ctrl.ansUpvote(ans)">
+                <i class="fa fa-angle-up fa-3x" ></i>
+                <p>{{ans.upvote}}</p>
+              </button>
+            </div>
+            <div class="col-md-offset-1">
+              <p>{{ans.answerText}}</p>
+            </div>
+
+            <div class="row">
+              <button class="nooutline" ng-click="$ctrl.ansDownvote(ans)">
+                <p style="margin-bottom: 0;">{{ans.downvote}}</p>
+                <i class="fa fa-angle-down fa-3x" ></i>
+              </button>
+            </div>
+            <h6 style="text-align: right;">answered by  {{ans.username}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aligncenter" ng-if="$ctrl.ans_flag == false">
+      <p>&nbsp;There are no answers to this question. Be the first one to answer!</p>
+    </div>
+      <div class="page-header aligncenter">
+        <h4>Your Answer</h4>
+      </div>
+      <textarea class="form-control" rows="4" placeholder="Your answer here" ng-model="$ctrl.userAnswerText"></textarea>
+      <br>
+      <center>
+        <button type="submit" class="btn btn-primary" id="submit" ng-disabled="$ctrl.ansText_flag" ng-click="$ctrl.submitAnswer()"> Submit Answer </button>
+        <div ng-if="$ctrl.flag_msg == true">
+          &nbsp;
+          <p>{{$ctrl.msg}}</p>
+        </div>
+      </center>
+
+    </div> <!-- /container -->
+
+</div>

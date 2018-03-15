@@ -1,0 +1,129 @@
+<div ng-app="myApp" ng-controller="postQuesCtrl as $ctrl">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#!/home">UCAN</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav alignright">
+          <li>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input placeholder="Search" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </form>
+          </li>
+          <li>
+            <a href="#"><!-- to put space between home and search--></a>
+          </li>
+          <li >
+            <a href="#!/home">
+              <i class="fa fa-home"></i>
+              </a>
+          </li>
+          <li class="active">
+            <a href="#!/askQues">
+              <i class="fa fa-plus"></i>
+              </a>
+          </li>
+          <li class="dropdown ddalignright">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
+                  <ul class="dropdown-menu allowscroll" id="notif">
+                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+                  </ul>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+  <div class="container theme-showcase" role="main">
+
+    <div class="page-header aligncenter">
+        <h2>Ask Your Query</h2>
+    </div>
+
+    <div class="page-header aligncenter">
+        <h4>Tags</h4>
+    </div>
+    <div class="row">
+      <div class="btn-toolbar aligncenter">
+        <button type="button" ng-class="{'btn': true, 'btn-default': $ctrl.btnD[topic.id], 'btn-primary': $ctrl.btnP[topic.id] }" name={{topic.id}} ng-click="$ctrl.buttonClassClick(topic.id)" ng-repeat="topic in $ctrl.topicsArr" >{{topic.name}} </button>
+      </div>
+    </div>
+
+    <div class="page-header aligncenter">
+        <h4>Title</h4>
+    </div>
+    <textarea class="form-control" rows="2" placeholder="A one-liner to specify your question (Limited to 255 characters only)." ng-model="$ctrl.quesTitle"></textarea>
+
+    <div class="page-header aligncenter">
+        <h4>Description</h4>
+    </div>
+    <textarea class="form-control" rows="4" placeholder="Describe your question in detail." ng-model="$ctrl.quesText"></textarea>
+
+
+    <div class="page-header aligncenter">
+      <h4>Language</h4>
+    </div>
+    <div class="input-group" ng-repeat="lang in $ctrl.langArray">
+        <span class="input-group-addon">
+         <input type="radio" name="optradio" ng-model="$ctrl.selected_lang" ng-value="lang.name">
+        </span>
+        <label class="form-control ">{{lang.name}}</label>
+    </div>
+    <br>
+
+    <div class="page-header aligncenter">
+        <h4>Communication Mode</h4>
+    </div>
+    <div class="input-group" ng-repeat="mode in $ctrl.commMode">
+        <span class="input-group-addon">
+         <input type="radio" name="optradio1" ng-change="$ctrl.changeMode($ctrl.comm_mode)" ng-model="$ctrl.comm_mode" ng-value="mode.name">
+        </span>
+        <label class="form-control ">{{mode.name}}</label>
+    </div>
+
+    <div class="page-header aligncenter" ng-if="$ctrl.flag == true">
+      <h4>Time for Communication</h4>
+    </div>
+    <div class="input-group" ng-if="$ctrl.flag == true">
+      <!-- You can put a for loop for the options I realised quite late how loong it is -->
+      <span class="input-group-addon">Hour</span>
+      <input list="hour" class="form-control" placeholder="24 hours system" id="hours" ng-model="$ctrl.hour" >
+       <datalist id="hour">
+         <option ng-repeat="hour in hourValues">{{hour}}</option>
+       </datalist>
+
+       <span class="input-group-addon">Minutes</span>
+       <input list="minutes" class="form-control" placeholder="24 hours system"  ng-model="$ctrl.min" id="minute">
+         <datalist id="minutes">
+           <option ng-repeat="min in minValues">{{min}}</option>
+         </datalist>
+     </div>
+
+    <br>
+    <center>
+      <!-- Remove a href, just for redirection purpose-->
+      <button type="submit" class="btn btn-primary" id="submit" ng-click="$ctrl.postQues()"> Submit Question </button>
+      <div ng-if="$ctrl.flag_msg == true">
+        &nbsp;
+        <p>{{$ctrl.msg}}</p>
+      </div>
+    </center>
+
+  </div> <!-- /container -->
+
+</div>

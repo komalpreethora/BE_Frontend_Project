@@ -1,173 +1,234 @@
-<div ng-app="myApp" ng-controller="home">
-  <!-- Navigation -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-   <div class="container col-md-12">
-     <a class="navbar-brand" href="#">UCAN</a>
-     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-       <span class="navbar-toggler-icon"></span>
-     </button>
-     <div class="collapse navbar-collapse" id="navbarResponsive">
-       <ul class="navbar-nav ml-auto">
-         <li class="nav-item active">
-           <a class="nav-link" href="#"><i class="fa fa-home"></i>
-             <span class="sr-only">(current)</span>
-           </a>
-         </li>
-         <li class="nav-item">
-           <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
-         </li>
-         <li class="nav-item">
-           <a class="nav-link" href="#"><i class="fa fa-plus"></i></a>
-         </li>
-       </ul>
-     </div>
-   </div>
- </nav>
+<div ng-app="myApp" ng-controller="homeCtrl">
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#!/home">UCAN</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav alignright">
+          <li>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input placeholder="Search" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </form>
+          </li>
+          <li>
+            <a href="#"><!-- to put space between home and search--></a>
+          </li>
+          <li class="active">
+            <a href="#!/home">
+              <i class="fa fa-home"></i>
+              </a>
+          </li>
+          <li>
+            <a href="#!/askQues">
+              <i class="fa fa-plus"></i>
+              </a>
+          </li>
+          <li class="dropdown ddalignright">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
+                  <ul class="dropdown-menu allowscroll" id="notif">
+                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
+                  </ul>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <div class="container theme-showcase" role="main">
 
 
+   <nav>
+    <!--<ul class="nav nav-tabs">
+      <li class="nav-item ">
+        <a class="nav-link active show" data-toggle="tab" href="#novice">Novice</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " data-toggle="tab" href="#expert">Expert</a>
+      </li>
+      <li class="dropdown ddalignright">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#!/settings">Profile</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Logout</a></li>
+            </ul>
+      </li>
+    </ul>-->
+    <ul class="nav nav-tabs">
+      <li class="nav-item active show">
+        <a class="nav-link" data-toggle="tab" data-target="#novice">Novice</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link " data-toggle="tab" data-target="#expert">Expert</a>
+      </li>
+      <li class="dropdown ddalignright">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#!/settings">Profile</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Logout</a></li>
+            </ul>
+      </li>
+    </ul>
 
- <nav>
-   <ul class="nav nav-tabs">
-     <li class="nav-item ">
-       <a class="nav-link active show" data-toggle="tab" href="#noviceques">Novice</a>
-     </li>
-     <li class="nav-item">
-       <a class="nav-link" data-toggle="tab" href="#expertques">Expert</a>
-     </li>
+    <!--Divs for tab content i.e. expert and novice-->
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade" id="expert">
+        <p></p>
+        <!-- Page Content -->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div ng-if="ques_e_flag == true">
+                <div class="jumbotron" ng-repeat="quesE in quesEArr">
+                 <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-1">
+                        <i class="fa fa-angle-up fa-2x"></i>
+                        <h5>{{quesE.upvote}}</h5>
+                      </div>
 
-     <!--Nav item on the right-->
-     <li class="nav-item dropdown ddright">
-          <!-- *Removed the href from dropdown as menu wasn't opening
-                Also bind User Name to actual username fetched        -->
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Name</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
-           <!-- <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>-->
-          </ul>
-        </li>
-   </ul>
+                      <div class="col-md-11">
+                        <div class="container">
+                          <h2 class="">{{quesE.title}}</h2>
+                          <p class="text-muted">Tags:<label ng-repeat="tag in quesE.tagnamelist">{{tag}}&nbsp;</label>
+                            <a href="#!/question/{{quesE.questionid}}" class="btn btn-primary alignright ">Read More &rarr;</a>
+                          </p>
+                          <h5><i>Status: {{quesE.state}} </i></h5>
+                          <div>
+                            <h5><i>Posted on {{quesE.timestamp}} by {{quesE.username}}</i></h5>
+                          </div>
+                        </div>
+                      </div>
 
-   <div id="myTabContent" class="tab-content">
-     <div class="tab-pane fade active show" id="noviceques">
-      <p></p>
-         <!-- Page Content -->
-         <div class="container">
-           <div class="row">
-             <div class="col-md-12" ng-if="ques_i_flag == true">
-               <!-- Question Cards-->
-               <div ng-repeat="quesI in quesIArr" class="card mb-4 h-10">
-                <!-- <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">-->
-                 <div class="card-body">
-                   <h2 class="card-title">{{quesI.title}}</h2>
-                   <p class="text-muted col-md-12">Tags: <label ng-repeat="tag in quesI.tagnamelist">{{tag}}&nbsp;</label></p>
-                   <!-- Change href link to question-ans page of this question when Read More clicked -->
-                   <a href="#" class="btn btn-primary btnright ">Read More &rarr;</a>
+                      <div class="col-md-1">
+                        <h5>{{quesE.downvote}}</h5>
+                        <i class="fa fa-angle-down fa-2x"></i>
+                      </div>
+                  </div>
                  </div>
-                 <div class="card-footer text-muted">
-                   Posted on {{quesI.timestamp}}
+                </div>
+              </div>
+              <div ng-if="ques_e_flag == false">
+                No questions available!
+              </div>
+              </div>
+              <!-- /.col-md-12 -->
+            </div>
+            <!-- /.row -->
+
+            <nav aria-label="Page navigation">
+              <center>
+                <ul class="pagination">
+                  <li>
+                    <a href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="active"><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">4</a></li>
+                  <li><a href="#">5</a></li>
+                  <li>
+                    <a href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </center>
+            </nav>
+          </div>
+          <!-- /.container -->
+      </div>
+
+      <div class="tab-pane fade active in" id="novice">
+        <p></p>
+        <!-- Page Content -->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div ng-if="ques_i_flag == true">
+                <div class="jumbotron" ng-repeat="quesI in quesIArr">
+                 <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-1">
+                        <i class="fa fa-angle-up fa-2x"></i>
+                        <h5>{{quesI.upvote}}</h5>
+                      </div>
+
+                      <div class="col-md-11">
+                        <div class="container">
+                          <h2 class="">{{quesI.title}}</h2>
+                          <p class="text-muted">Tags:<label ng-repeat="tag in quesI.tagnamelist">{{tag}}&nbsp;</label>
+                            <a href="#!/question/{{quesI.questionid}}" class="btn btn-primary alignright ">Read More &rarr;</a>
+                          </p>
+                          <h5><i>Status: {{quesI.state}} </i></h5>
+                          <div>
+                            <h5><i>Posted on {{quesI.timestamp}} by {{quesI.username}}</i></h5>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-1">
+                        <h5>{{quesI.downvote}}</h5>
+                        <i class="fa fa-angle-down fa-2x"></i>
+                      </div>
+                  </div>
                  </div>
-               </div>
+                </div>
+              </div>
+              <div ng-if="ques_i_flag == false">
+                No questions available!
+              </div>
+              </div>
+            </div>
+            <!-- /.row -->
 
-               <!-- Pagination -->
-               <ul class="pagination justify-content-center mb-4">
-                 <li class="page-item">
-                   <a class="page-link" href="#">&larr;</a>
-                 </li>
-                 <li class="page-item">
-                   <a class="page-link" href="#">1</a>
-                 </li>
-                 <li class="page-item">
-                   <a class="page-link" href="#">2</a>
-                 </li>
-                 <li class="page-item">
-                   <a class="page-link" href="#">3</a>
-                 </li>
-                 <li class="page-item">
-                   <a class="page-link" href="#">4</a>
-                 </li>
-                 <li class="page-item ">
-                   <a class="page-link" href="#">&rarr;</a>
-                 </li>
-               </ul>
+            <nav aria-label="Page navigation">
+              <center>
+                <ul class="pagination">
+                  <li>
+                    <a href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="active"><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">4</a></li>
+                  <li><a href="#">5</a></li>
+                  <li>
+                    <a href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </center>
+            </nav>
+          </div>
+          <!-- /.container -->
+      </div>
+    </div>
+  </nav>
 
-             </div>
-             <div class="col-md-12" ng-if="ques_i_flag != true">
-               <p>No questions available!</p>
-             </div>
-             </div>
-             <!-- /.row -->
-           </div>
-         <!-- /.container -->
 
-     </div>
-     <div class="tab-pane fade" id="expertques">
-       <p></p>
-       <!-- Page Content for Expert Tab-->
-         <div class="container">
-           <div class="row">
-             <!-- Column -->
-             <div class="col-md-12" ng-if="ques_e_flag == true">
-               <!-- Question Cards-->
-               <div ng-repeat="quesE in quesEArr" class="card mb-4 h-10">
-                 <div class="card-body">
-                   <h2 class="card-title">{{quesE.title}}</h2>
-                   <p class="text-muted col-md-12">Tags: <label ng-repeat="tag in quesE.tagnamelist">{{tag}}&nbsp;</label></p>
-                   <!-- Change link to question-ans page when Read More clicked -->
-                   <a href="#" class="btn btn-primary btnright ">Read More &rarr;</a>
-                 </div>
-                 <div class="card-footer text-muted">
-                   Posted on {{quesE.timestamp}}
-                 </div>
-               </div>
-
-               <!-- Pagination -->
-               <ul class="pagination justify-content-center mb-4">
-                 <li class="page-item">
-                   <a class="page-link" href="#">&larr;</a>
-                 </li>
-                 <li class="page-item">
-                   <a class="page-link" href="#">1</a>
-                 </li>
-                 <li class="page-item">
-                   <a class="page-link" href="#">2</a>
-                 </li>
-                 <li class="page-item">
-                   <a class="page-link" href="#">3</a>
-                 </li>
-                 <li class="page-item">
-                   <a class="page-link" href="#">4</a>
-                 </li>
-                 <li class="page-item ">
-                   <a class="page-link" href="#">&rarr;</a>
-                 </li>
-               </ul>
-             </div>
-             <div class="col-md-12" ng-if="ques_e_flag != true">
-               <p>No questions available!</p>
-             </div>
-             </div>
-             <!-- /.row -->
-           </div>
-         <!-- /.container -->
-     </div>
-     <div class="tab-pane fade" id="dropdown1">
-       <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
-     </div>
-     <div class="tab-pane fade" id="dropdown2">
-       <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
-     </div>
-   </div>
- </nav>
-
- <!-- Footer -->
- <footer class="py-5 bg-dark">
-   <div class="container">
-     <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-   </div>
-   <!-- /.container -->
- </footer>
+  </div> <!-- /container -->
 </div>

@@ -7,8 +7,32 @@ myApp.config(['$routeProvider',
 		$routeProvider.
 			when('/',
 			{
+				templateUrl: "html/login.html",
+				controller: "loginCtrl"
+			}).
+			when('/home',
+			{
 				templateUrl: "html/home.html",
-				controller: "home"
+				controller: "homeCtrl"
+			}).
+			when('/settings',
+			{
+				templateUrl: "html/settings.html",
+				controller: "settingsCtrl"
+			}).
+			when('/askQues',{
+				templateUrl: "html/askQues.html",
+				controller: "postQuesCtrl"
+			}).
+			when('/question/:quesId',
+			{
+				templateUrl: "html/question.html",
+				controller: "quesAnswerCtrl"
+			}).
+			when('/experts/:quesId',
+			{
+				templateUrl: "html/experts.html",
+				controller: "expertsCtrl"
 			});
 	}
 ]);
