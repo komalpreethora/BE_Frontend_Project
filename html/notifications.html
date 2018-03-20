@@ -1,0 +1,110 @@
+<div ng-app="myApp" ng-controller="notifCtrl as $ctrl">
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#!/home">UCAN</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav alignright">
+          <li>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input placeholder="Search" class="form-control" ng-model="$ctrl.searchtext">
+              </div>
+              <button type="submit" class="btn btn-primary" ng-click="$ctrl.search()"><i class="fa fa-search"></i></button>
+            </form>
+          </li>
+          <li>
+            <a href="#"><!-- to put space between home and search--></a>
+          </li>
+          <li>
+            <a href="#!/home">
+              <i class="fa fa-home"></i>
+              </a>
+          </li>
+          <li>
+            <a href="#!/askQues">
+              <i class="fa fa-plus"></i>
+              </a>
+          </li>
+          <li class="active">
+            <a><i class="fa fa-bell"></i></a>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <div class="container theme-showcase" role="main">
+    <div class="page-header aligncenter">
+      <h4>Notifications</h4>
+    </div>
+    <br><br>
+    <div class="aligncenter" ng-repeat="notification in $ctrl.notifArr">
+
+      <!-- If notifications are unread -->
+      <!-- <span style="background-color: #60d164"> -->
+      <div ng-if="notification.state === 'unread'">
+        <h6>Unread</h6>
+        <div ng-if="notification.ntype === 'seekerrequest'">
+          <a ng-href={{notification.link}}><p>{{notification.message}}</p></a>
+          <a ng-click="$ctrl.sessionStatus(notification.nid, $ctrl.userid, notification.qid, 1)"><i class="fa fa-check"  aria-hidden="true">Accept</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a ng-click="$ctrl.sessionStatus(notification.nid, $ctrl.userid, notification.qid, 2)"><i class="fa fa-times" aria-hidden="true">Reject</i></a>
+          <br>
+        </div>
+        <div ng-if="notification.ntype === 'answer'">
+          <a ng-href={{notification.link}} ng-click="$ctrl.notifStatus(notification.nid)"><p>{{notification.message}}</p></a>
+        </div>
+
+        <div ng-if="notification.ntype ==='requeststatus' || notification.ntype === 'discussion'">
+          <p>{{notification.message}}</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- If notifications are read -->
+      <div ng-if="notification.state === 'read'">
+        <h6>Read</h6>
+        <div ng-if="notification.ntype === 'seekerrequest'">
+          <a ng-href={{notification.link}}><p>{{notification.message}}</p></a>
+        </div>
+        <div ng-if="notification.ntype === 'answer'">
+          <a ng-href={{notification.link}} ng-click="$ctrl.notifStatus(notification.nid)"><p>{{notification.message}}</p></a>
+        </div>
+
+        <div ng-if="notification.ntype ==='requeststatus' || notification.ntype === 'discussion'">
+          <p>{{notification.message}}</p>
+        </div>
+      </div>
+
+      <hr>
+
+    </div>
+
+    <nav aria-label="Page navigation">
+      <center>
+        <ul class="pagination">
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li ng-class="{'active': $ctrl.pageActive[page.id]}" ng-repeat ="page in $ctrl.pageArr"><a ng-click="$ctrl.notificationsPaging(page.id)">{{page.id}}</a></li>
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </center>
+    </nav>
+  </div> <!-- /container -->
+</div>

@@ -1,11 +1,15 @@
-myApp.controller('settingsCtrl',function($scope,$q,$http,$cookies){
+myApp.controller('settingsCtrl',function($scope,$q,$http,$cookies,$location,searchService, notifications){
 
   //TO-DO: Bind userid to login
 
   $scope.userid = $cookies.get('userId');
+  $scope.sessionStatus = notifications.sessionStatus;
+  $scope.notifStatus = notifications.notifStatus;
+
   $scope.isEditable = true; //for enabling editing of personal details+preferences
   $scope.isEditableE = true; //for enabling editing of expertise tab info
   $scope.isEditableI = true; //for enabling editing of interest tab info
+  $scope.searchtext = null;
   $scope.buttonText = "Enable Editing";
   $scope.buttonTextE = "Enable Editing";
   $scope.buttonTextI = "Enable Editing";
@@ -25,6 +29,8 @@ myApp.controller('settingsCtrl',function($scope,$q,$http,$cookies){
   $scope.ques_flag = false;
   $scope.ansArr = [];
   $scope.quesArr = [];
+  $scope.notifArr = [];
+  $scope.notif_flag = true;
 
   //--For generating hours and mins values for time
   $scope.hourValues = [];
@@ -339,6 +345,62 @@ myApp.controller('settingsCtrl',function($scope,$q,$http,$cookies){
     }
   });
 
+  //--Fetching notifications to display in dropdown menu(max. 3)
+  url="http://localhost:8082/v1.0/notification/"+$scope.userid+"/1";
+  var notif_deferred = $q.defer();
+
+  $http.get(url)
+  .then(function(api_notif_response)
+  {
+    notif_deferred.resolve(api_notif_response);
+  },
+  function(api_notif_response)
+  {
+    notif_deferred.reject(api_notif_response);
+  });
+
+  notif_deferred.promise.then(function(api_notif_response)
+  {
+    $scope.return_notif = notifications.getNotifications($scope.userid, api_notif_response);
+    if($scope.return_notif.len == 0)
+    {
+      //if no notifications
+      $scope.notif_flag = false;
+      $scope.notif_length = "";
+      $scope.notifArr = $scope.return_notif.notifArr;
+    }
+    else {
+      $scope.notif_length = $scope.return_notif.len;
+      $scope.notif_flag = true;
+      $scope.notifArr = $scope.return_notif.notifArr;
+    }
+  });
+
+  //--Changing status for type 2 & 3 of notifications
+  //--for ntypes 2 and 3 mark as read as soon as dropdown is toggled!
+  $scope.onClickNotif = function(){
+    console.log("Reached onClickNotif function");
+    console.log($scope.notifArr);
+    for(var i = 0; i < $scope.notifArr.length; i++){
+      if(($scope.notifArr[i].ntype === 'requeststatus' || $scope.notifArr[i].ntype === 'discussion') && $scope.notifArr[i].state === 'unread'){
+        console.log("For ",$scope.notifArr[i].nid);
+        url = "http://localhost:8082/v1.0/notification/markread/"+$scope.notifArr[i].nid;
+        var status_deferred = $q.defer();
+        $http.get(url)
+        .then(function(api_status_response)
+        {
+          status_deferred.resolve(api_status_response);
+          console.log("Marked read for notification:",$scope.notifArr[i].nid);
+        },
+        function(api_status_response)
+        {
+          status_deferred.reject(api_status_response);
+        });
+      }
+    }
+  };
+
+
 
   //--Function to change password type to text type
   $scope.displayPassword = function(){
@@ -592,4 +654,12 @@ myApp.controller('settingsCtrl',function($scope,$q,$http,$cookies){
     }
   };
 
+  $scope.search = function(){
+    searchService.set($scope.searchtext);
+    $scope.changeView('/search')
+  };
+
+  $scope.changeView = function(newView){
+    $location.path(newView);
+  }
 });

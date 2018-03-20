@@ -1,4 +1,5 @@
-<div ng-app="myApp" ng-controller="expertsCtrl as $ctrl">
+<div ng-app="myApp" ng-controller="searchCtrl as $ctrl">
+  <!-- Fixed navbar -->
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -23,16 +24,17 @@
           <li>
             <a href="#"><!-- to put space between home and search--></a>
           </li>
-          <li >
+          <li class="active">
             <a href="#!/home">
               <i class="fa fa-home"></i>
               </a>
           </li>
-          <li class="active">
+          <li>
             <a href="#!/askQues">
               <i class="fa fa-plus"></i>
-              </a>
+            </a>
           </li>
+
           <li ng-if="$ctrl.notif_flag == false" class="dropdown" >
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i></a>
             <ul class="dropdown-menu allowscroll" style="padding: 10px;">
@@ -85,37 +87,50 @@
   </nav>
 
   <div class="container theme-showcase" role="main">
-    <div class="page-header aligncenter">
-        <h2>Select your Expert</h2>
-        <h5>Choose the experts you want an answer from!</h6>
+
+    <div ng-if="$ctrl.search_flag == false">
+      <h5>No questions found that match your search query!</h5>
     </div>
 
-    <div class="row" ng-if="$ctrl.expert_flag == true">
-      <div class="col-sm-6 col-md-4" ng-repeat="expert in $ctrl.expertArr">
-        <div class="thumbnail">
-          <div class="caption">
-            <h3>{{expert.username}}</h3>
-            <p>Number of questions answered: {{expert.answer_count}}<br>
-              Preferred time of answering: {{expert.start_time}}<br>
-              Preferred language: {{expert.lang}}
-            </p>
-            <button type="button" ng-class="{'btn': true, 'btn-default': $ctrl.btnDE[expert.e_ind], 'btn-primary': $ctrl.btnPE[expert.e_ind] }" name={{exp.e_ind}} ng-click="$ctrl.buttonEClick(expert.e_ind)">Select</button>
+    <!-- If questions found then display cards -->
+    <div ng-if="$ctrl.search_flag == true">
+      <div class="page-header aligncenter">
+         <h4>Results for '{{$ctrl.text}}'</h4>
+      </div>
+
+      <div class="panel panel-primary" ng-repeat="ques in $ctrl.quesArr">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ques.title}}</h3>
+        </div>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+
+              <div class="col-md-1">
+                <i class="fa fa-angle-up">{{ques.upvote}}</i>
+              </div>
+
+              <div class="col-md-11">
+                <p class="text-muted">Tags: <label ng-repeat="tag in ques.tagnamelist">{{tag}}&nbsp;</label>
+                  <a href="#!/question/{{ques.questionid}}" class="btn btn-primary alignright ">Read More &rarr;</a>
+                </p>
+                <div class="text-muted">
+                  Posted on {{ques.timestamp}} by
+                  <a href="#">{{ques.username}}</a>
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <i class="fa fa-angle-down">{{ques.downvote}}</i>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div ng-if="$ctrl.expert_flag == false">
-      <p> No experts belong to the tags you have selected!</p>
-    </div>
 
-    <center>
-      <!-- Remove a href, just for redirection purpose-->
-      <button type="submit" class="btn btn-primary" id="submit" ng-click="$ctrl.submitExperts()"> Ask Question </button>
-      <br>
-      <div ng-if="$ctrl.error_flag == true">
-        <p>You haven't selected any experts to answer your query!</p>
-      </div>
-    </center>
+    </div>
 
   </div> <!-- /container -->
 </div>

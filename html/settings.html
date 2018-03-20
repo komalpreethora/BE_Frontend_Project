@@ -15,9 +15,9 @@
           <li>
             <form class="navbar-form navbar-right">
               <div class="form-group">
-                <input placeholder="Search" class="form-control">
+                <input placeholder="Search" class="form-control" ng-model="searchtext">
               </div>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+              <button type="submit" class="btn btn-primary" ng-click="search()"><i class="fa fa-search"></i></button>
             </form>
           </li>
           <li>
@@ -33,17 +33,52 @@
               <i class="fa fa-plus"></i>
               </a>
           </li>
-          <li class="dropdown ddalignright">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
-                  <ul class="dropdown-menu allowscroll" id="notif">
-                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
-                  </ul>
+
+          <li ng-if="notif_flag == false" class="dropdown" >
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i></a>
+            <ul class="dropdown-menu allowscroll" style="padding: 10px;">
+              <li class="aligncenter">No notifications available!</li>
+              <li class="divider aligncenter" role="separator"></li>
+              <li class="aligncenter"><a href="#!/notifications">See all notifications &rarr;</a></li>
+            </ul>
+          </li>
+
+          <li ng-if="notif_flag == true" ng-click="onClickNotif()" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">{{notif_length}}</span></i></a>
+            <ul class="dropdown-menu allowscroll" style="padding: 10px;">
+              <div ng-repeat="notification in notifArr">
+
+                <div ng-if="notification.ntype === 'seekerrequest'">
+                  <li style="padding: 5px;" class="aligncenter"><a ng-href={{notification.link}}><p>{{notification.message}}</p></a></li>
+                  <div ng-if="notification.state === 'unread'">
+                    <a ng-click="sessionStatus(notification.nid, userid, notification.qid, 1)"><i class="fa fa-check" style="float: left;" aria-hidden="true">Accept</i></a>
+                    <a ng-click="sessionStatus(notification.nid, userid, notification.qid, 2)"><i class="fa fa-times" style="float: right;" aria-hidden="true">Reject</i></a>
+                    <br>
+                  </div>
+                </div>
+
+                <div ng-if="notification.ntype === 'answer'">
+                  <li style="padding: 5px;" class="aligncenter"><a ng-href={{notification.link}} ng-click="notifStatus(notification.nid)"><p>{{notification.message}}</p></a></li>
+                </div>
+
+                <div ng-if="notification.ntype ==='requeststatus' || notification.ntype === 'discussion'">
+                  <li style="padding: 5px;" class="aligncenter"><p>{{notification.message}}</p></li>
+                </div>
+
+                <li class="divider aligncenter" role="separator"></li>
+              </div>
+              <li class="aligncenter"><a href="#!/notifications">See all notifications &rarr;</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#"></a>
+          </li>
+          <li>
+            <a href="#"></a>
+          </li>
+          <li>
+            <a href="#"></a>
           </li>
         </ul>
       </div><!--/.nav-collapse -->

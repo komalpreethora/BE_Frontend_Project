@@ -1,10 +1,13 @@
-myApp.controller('quesAnswerCtrl',function($scope, $http, $q, $route, $routeParams, $cookies){
+myApp.controller('quesAnswerCtrl',function($scope, $http, $q, $route, $routeParams, $cookies, $location, searchService, notifications){
 
   var vm = this;
   vm.userid = $cookies.get('userId');
   vm.quesId = $routeParams.quesId;
+  vm.sessionStatus = notifications.sessionStatus;
+  vm.notifStatus = notifications.notifStatus;
 
   vm.userAnswerText = null;
+  vm.searchtext = null;
   vm.ansArray = [];
   vm.q_upClick = 0;
   vm.q_downClick = 0;
@@ -13,6 +16,8 @@ myApp.controller('quesAnswerCtrl',function($scope, $http, $q, $route, $routePara
   vm.flag_msg = false;
   vm.ansText_flag = false;
   vm.msg = null;
+  vm.notifArr = [];
+  vm.notif_flag = true;
 
   var url = "http://localhost:8082/v1.0/question/"+vm.quesId;
   var ques_deferred = $q.defer();
@@ -57,6 +62,37 @@ myApp.controller('quesAnswerCtrl',function($scope, $http, $q, $route, $routePara
       }
     }
 	});
+
+  //--Fetching notifications to display in dropdown menu(max. 3)
+  url="http://localhost:8082/v1.0/notification/"+vm.userid+"/1";
+  var notif_deferred = $q.defer();
+
+  $http.get(url)
+  .then(function(api_notif_response)
+  {
+    notif_deferred.resolve(api_notif_response);
+  },
+  function(api_notif_response)
+  {
+    notif_deferred.reject(api_notif_response);
+  });
+
+  notif_deferred.promise.then(function(api_notif_response)
+  {
+    vm.return_notif = notifications.getNotifications(vm.userid, api_notif_response);
+    if(vm.return_notif.len == 0)
+    {
+      //if no notifications
+      vm.notif_flag = false;
+      vm.notif_length = "";
+      vm.notifArr = vm.return_notif.notifArr;
+    }
+    else {
+      vm.notif_length = vm.return_notif.len;
+      vm.notif_flag = true;
+      vm.notifArr = vm.return_notif.notifArr;
+    }
+  });
 
   vm.quesUpvote = function(){
     url = "http://localhost:8082/v1.0/question/vote";
@@ -188,6 +224,39 @@ myApp.controller('quesAnswerCtrl',function($scope, $http, $q, $route, $routePara
         ans_post_deferred.reject(api_response);
       });
     }
+  };
+
+    //--Changing status for type 2 & 3 of notifications
+    //--for ntypes 2 and 3 mark as read as soon as dropdown is toggled!
+    vm.onClickNotif = function(){
+      console.log("Reached onClickNotif function");
+      console.log(vm.notifArr);
+      for(var i = 0; i < vm.notifArr.length; i++){
+        if((vm.notifArr[i].ntype === 'requeststatus' || vm.notifArr[i].ntype === 'discussion') && vm.notifArr[i].state === 'unread'){
+          console.log("For ",vm.notifArr[i].nid);
+          url = "http://localhost:8082/v1.0/notification/markread/"+vm.notifArr[i].nid;
+          var status_deferred = $q.defer();
+      	  $http.get(url)
+      	  .then(function(api_status_response)
+      	  {
+      	  	status_deferred.resolve(api_status_response);
+      	    console.log("Marked read for notification:",vm.notifArr[i].nid);
+      	  },
+      	  function(api_status_response)
+      	  {
+      	    status_deferred.reject(api_status_response);
+      	  });
+        }
+      }
+    };
+
+  vm.search = function(){
+    searchService.set(vm.searchtext);
+    vm.changeView('/search')
+  };
+
+  vm.changeView = function(newView){
+    $location.path(newView);
   };
 
 });

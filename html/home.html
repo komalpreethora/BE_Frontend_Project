@@ -1,4 +1,4 @@
-<div ng-app="myApp" ng-controller="homeCtrl">
+<div ng-app="myApp" ng-controller="homeCtrl as $ctrl">
   <!-- Fixed navbar -->
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -16,9 +16,9 @@
           <li>
             <form class="navbar-form navbar-right">
               <div class="form-group">
-                <input placeholder="Search" class="form-control">
+                <input placeholder="Search" class="form-control" ng-model="$ctrl.searchtext">
               </div>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+              <button type="submit" class="btn btn-primary" ng-click="$ctrl.search()"><i class="fa fa-search"></i></button>
             </form>
           </li>
           <li>
@@ -32,19 +32,54 @@
           <li>
             <a href="#!/askQues">
               <i class="fa fa-plus"></i>
-              </a>
+            </a>
           </li>
-          <li class="dropdown ddalignright">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">4</span></i></a>
-                  <ul class="dropdown-menu allowscroll" id="notif">
-                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</a></li>
-                  </ul>
+
+          <li ng-if="$ctrl.notif_flag == false" class="dropdown" >
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i></a>
+            <ul class="dropdown-menu allowscroll" style="padding: 10px;">
+              <li class="aligncenter">No notifications available!</li>
+              <li class="divider aligncenter" role="separator"></li>
+              <li class="aligncenter"><a href="#!/notifications">See all notifications &rarr;</a></li>
+            </ul>
+          </li>
+
+          <li ng-if="$ctrl.notif_flag == true" ng-click="$ctrl.onClickNotif()" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"><span class="badge">{{$ctrl.notif_length}}</span></i></a>
+            <ul class="dropdown-menu allowscroll" style="padding: 10px;">
+              <div ng-repeat="notification in $ctrl.notifArr">
+
+                <div ng-if="notification.ntype === 'seekerrequest'">
+                  <li style="padding: 5px;" class="aligncenter"><a ng-href={{notification.link}}><p>{{notification.message}}</p></a></li>
+                  <div ng-if="notification.state === 'unread'">
+                    <a ng-click="$ctrl.sessionStatus(notification.nid, $ctrl.userid, notification.qid, 1)"><i class="fa fa-check" style="float: left;" aria-hidden="true">Accept</i></a>
+                    <a ng-click="$ctrl.sessionStatus(notification.nid, $ctrl.userid, notification.qid, 2)"><i class="fa fa-times" style="float: right;" aria-hidden="true">Reject</i></a>
+                    <br>
+                  </div>
+                </div>
+
+                <div ng-if="notification.ntype === 'answer'">
+                  <li style="padding: 5px;" class="aligncenter"><a ng-href={{notification.link}} ng-click="$ctrl.notifStatus(notification.nid)"><p>{{notification.message}}</p></a></li>
+                </div>
+
+                <div ng-if="notification.ntype ==='requeststatus' || notification.ntype === 'discussion'">
+                  <li style="padding: 5px;" class="aligncenter"><p>{{notification.message}}</p></li>
+                </div>
+
+                <li class="divider aligncenter" role="separator"></li>
+              </div>
+              <li class="aligncenter"><a href="#!/notifications">See all notifications &rarr;</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#"></a>
+          </li>
+          <li>
+            <a href="#"></a>
+          </li>
+          <li>
+            <a href="#"></a>
           </li>
         </ul>
       </div><!--/.nav-collapse -->
@@ -55,22 +90,6 @@
 
 
    <nav>
-    <!--<ul class="nav nav-tabs">
-      <li class="nav-item ">
-        <a class="nav-link active show" data-toggle="tab" href="#novice">Novice</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " data-toggle="tab" href="#expert">Expert</a>
-      </li>
-      <li class="dropdown ddalignright">
-            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#!/settings">Profile</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Logout</a></li>
-            </ul>
-      </li>
-    </ul>-->
     <ul class="nav nav-tabs">
       <li class="nav-item ">
         <a class="nav-link " data-toggle="tab" data-target="#expert">Expert</a>
@@ -83,7 +102,7 @@
             <ul class="dropdown-menu">
               <li><a href="#!/settings">Profile</a></li>
               <li role="separator" class="divider"></li>
-              <li ng-click="logoutUser()"><a>Logout</a></li>
+              <li ng-click="$ctrl.logoutUser()"><a>Logout</a></li>
             </ul>
       </li>
     </ul>
@@ -96,8 +115,8 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12">
-                <div ng-if="ques_e_flag == true">
-                <div class="jumbotron" ng-repeat="quesE in quesEArr">
+                <div ng-if="$ctrl.ques_e_flag == true">
+                <div class="jumbotron" ng-repeat="quesE in $ctrl.quesEArr">
                  <div class="row">
                   <div class="col-md-12">
                       <div class="col-md-1">
@@ -126,7 +145,7 @@
                  </div>
                 </div>
               </div>
-              <div ng-if="ques_e_flag == false">
+              <div ng-if="$ctrl.ques_e_flag == false">
                 No questions available!
               </div>
               </div>
@@ -142,7 +161,7 @@
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li ng-class="{'active': pageEActive[page.id]}" ng-repeat ="page in pageEArr"><a ng-click="expertCards(page.id)">{{page.id}}</a></li>
+                  <li ng-class="{'active': $ctrl.pageEActive[page.id]}" ng-repeat ="page in $ctrl.pageEArr"><a ng-click="$ctrl.expertCards(page.id)">{{page.id}}</a></li>
                   <li>
                     <a href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
@@ -161,8 +180,8 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12">
-                <div ng-if="ques_i_flag == true">
-                <div class="jumbotron" ng-repeat="quesI in quesIArr">
+                <div ng-if="$ctrl.ques_i_flag == true">
+                <div class="jumbotron" ng-repeat="quesI in $ctrl.quesIArr">
                  <div class="row">
                   <div class="col-md-12">
                       <div class="col-md-1">
@@ -191,7 +210,7 @@
                  </div>
                 </div>
               </div>
-              <div ng-if="ques_i_flag == false">
+              <div ng-if="$ctrl.ques_i_flag == false">
                 No questions available!
               </div>
               </div>
@@ -206,7 +225,7 @@
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li ng-class="{'active': pageIActive[page.id]}" ng-repeat ="page in pageIArr"><a ng-click="interestCards(page.id)">{{page.id}}</a></li>
+                  <li ng-class="{'active': $ctrl.pageIActive[page.id]}" ng-repeat ="page in $ctrl.pageIArr"><a ng-click="$cctrl.interestCards(page.id)">{{page.id}}</a></li>
                   <li>
                     <a href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
