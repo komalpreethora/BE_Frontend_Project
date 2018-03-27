@@ -1,10 +1,9 @@
 Install gulp in project folder using command:- npm install gulp      
-To deploy project use command:- gulp dev (deploys project on localhost:3000)    
-
+To deploy project use command:- gulp (deploys project on localhost:8090)    
+Note:- Must have all four modules of backend running   
+  
 TO-DO: 
-Implement pagination in home page  
-Fix user preference API problem  
-Implement APIs for negotitation i.e. complete expert page  
-Bind user id to cookie to maintain a session for the user  
-Notifications  
+Displaying session answer  
+Marking users as online/offline in a session  
+Marking question open/closed  
 
