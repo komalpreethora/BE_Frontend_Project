@@ -45,6 +45,7 @@ myApp.controller('loginCtrl',function($scope, $http, $q, $location, $cookies){
 
       post_deferred.promise.then(function(api_response){
         if(api_response.data == true){
+          console.log("Here in true");
           vm.error_flag = false;
           vm.msg="You are now a member. Please login!"
         }
@@ -84,6 +85,7 @@ myApp.controller('loginCtrl',function($scope, $http, $q, $location, $cookies){
         if(api_user_response.data.password === vm.login_password)
         {
           $cookies.put('userId',api_user_response.data.userid);
+          $cookies.put('userName',api_user_response.data.username);
           console.log($cookies.get('userId'));
           vm.changeView('/home');
         }

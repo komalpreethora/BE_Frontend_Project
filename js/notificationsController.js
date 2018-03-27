@@ -68,7 +68,7 @@ myApp.controller('notifCtrl',function($scope, $q, $http, $cookies, $location, se
 
       //--Mark messages of type 2 and 3 as read if they are unread
       for(var i = 0; i < vm.notifArr.length; i++){
-        if((vm.notifArr[i].ntype === 'requeststatus' || vm.notifArr[i].ntype === 'discussion') && vm.notifArr[i].state === 'unread'){
+        if((vm.notifArr[i].ntype === 'requeststatus') && vm.notifArr[i].state === 'unread'){
           console.log("For ",vm.notifArr[i].nid);
           url = "http://localhost:8082/v1.0/notification/markread/"+vm.notifArr[i].nid;
           var status_deferred = $q.defer();
@@ -149,7 +149,10 @@ myApp.controller('notifCtrl',function($scope, $q, $http, $cookies, $location, se
 
   };
 
-
+  vm.startModal = function(qid, other_userid){
+    //pass qid, userid, other_userid for connecting with websocket
+  };
+  
   vm.search = function(){
     searchService.set(vm.searchtext);
     vm.changeView('/search')

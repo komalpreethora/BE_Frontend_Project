@@ -101,7 +101,7 @@ myApp.controller('postQuesCtrl',function($scope, $http, $q, $location, $cookies,
 		}
 	});
 
-  //--fetching notifications max.3
+  //--Fetching notifications to display in dropdown menu(max. 3)
   url="http://localhost:8082/v1.0/notification/"+vm.userid+"/1";
   var notif_deferred = $q.defer();
 
@@ -129,33 +129,33 @@ myApp.controller('postQuesCtrl',function($scope, $http, $q, $location, $cookies,
       vm.notif_length = vm.return_notif.len;
       vm.notif_flag = true;
       vm.notifArr = vm.return_notif.notifArr;
+      console.log("Received notifArr as: ",vm.notifArr);
     }
   });
 
-
-    //--Changing status for type 2 & 3 of notifications
-    //--for ntypes 2 and 3 mark as read as soon as dropdown is toggled!
-    vm.onClickNotif = function(){
-      console.log("Reached onClickNotif function");
-      console.log(vm.notifArr);
-      for(var i = 0; i < vm.notifArr.length; i++){
-        if((vm.notifArr[i].ntype === 'requeststatus' || vm.notifArr[i].ntype === 'discussion') && vm.notifArr[i].state === 'unread'){
-          console.log("For ",vm.notifArr[i].nid);
-          url = "http://localhost:8082/v1.0/notification/markread/"+vm.notifArr[i].nid;
-          var status_deferred = $q.defer();
-      	  $http.get(url)
-      	  .then(function(api_status_response)
-      	  {
-      	  	status_deferred.resolve(api_status_response);
-      	    console.log("Marked read for notification:",vm.notifArr[i].nid);
-      	  },
-      	  function(api_status_response)
-      	  {
-      	    status_deferred.reject(api_status_response);
-      	  });
-        }
+  //--Changing status for type 2 & 3 of notifications
+  //--for ntypes 2 and 3 mark as read as soon as dropdown is toggled!
+  vm.onClickNotif = function(){
+    console.log("Reached onClickNotif function");
+    console.log(vm.notifArr);
+    for(var i = 0; i < vm.notifArr.length; i++){
+      if((vm.notifArr[i].ntype === 'requeststatus') && vm.notifArr[i].state === 'unread'){
+        console.log("For ",vm.notifArr[i].nid);
+        url = "http://localhost:8082/v1.0/notification/markread/"+vm.notifArr[i].nid;
+        var status_deferred = $q.defer();
+    	  $http.get(url)
+    	  .then(function(api_status_response)
+    	  {
+    	  	status_deferred.resolve(api_status_response);
+    	    console.log("Marked read for notification:",vm.notifArr[i].nid);
+    	  },
+    	  function(api_status_response)
+    	  {
+    	    status_deferred.reject(api_status_response);
+    	  });
       }
-    };
+    }
+  };
 
   //--On click of buttons toggle between default and primary states
   vm.buttonClassClick = function(param){

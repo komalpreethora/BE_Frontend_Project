@@ -1,29 +1,17 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 var pkg = require('./package.json');
+var connect = require('gulp-connect');
 
-// Copy third party libraries from /node_modules into /vendor
-gulp.task('vendor', function() {
+gulp.task('default', ['webserver']);
 
-  // Bootstrap
-  gulp.src([
-      './node_modules/bootstrap/dist/**/*',
-      '!./node_modules/bootstrap/dist/css/bootstrap-grid*',
-      '!./node_modules/bootstrap/dist/css/bootstrap-reboot*'
-    ])
-    .pipe(gulp.dest('./vendor/bootstrap'))
-
-  // jQuery
-  gulp.src([
-      './node_modules/jquery/dist/*',
-      '!./node_modules/jquery/dist/core.js'
-    ])
-    .pipe(gulp.dest('./vendor/jquery'))
-
-})
-
-// Default task
-gulp.task('default', ['vendor']);
+// Webserver task
+gulp.task('webserver', function() {
+  connect.server({
+    port: 8090,
+    livereload: true
+  });
+});
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {

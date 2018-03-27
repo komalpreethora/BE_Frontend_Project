@@ -62,10 +62,17 @@
                   <li style="padding: 5px;" class="aligncenter"><a ng-href={{notification.link}} ng-click="$ctrl.notifStatus(notification.nid)"><p>{{notification.message}}</p></a></li>
                 </div>
 
-                <div ng-if="notification.ntype ==='requeststatus' || notification.ntype === 'discussion'">
+                <div ng-if="notification.ntype ==='requeststatus'">
                   <li style="padding: 5px;" class="aligncenter"><p>{{notification.message}}</p></li>
                 </div>
 
+                <div ng-if="notification.ntype === 'discussion'">
+                  <li style="padding: 5px;" class="aligncenter"><p>{{notification.message}}</p></li>
+                  <div ng-if="notification.state === 'unread'">
+                    <a ng-click="$ctrl.open('lg', notification.qid, notification.title, notification.otheruserid, notification.otherusername)"><i class="fa fa-check" aria-hidden="true">Start Session</i></a>
+                    <br>
+                  </div>
+                </div>
                 <li class="divider aligncenter" role="separator"></li>
               </div>
               <li class="aligncenter"><a href="#!/notifications">See all notifications &rarr;</a></li>
@@ -225,7 +232,7 @@
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li ng-class="{'active': $ctrl.pageIActive[page.id]}" ng-repeat ="page in $ctrl.pageIArr"><a ng-click="$cctrl.interestCards(page.id)">{{page.id}}</a></li>
+                  <li ng-class="{'active': $ctrl.pageIActive[page.id]}" ng-repeat ="page in $ctrl.pageIArr"><a ng-click="$ctrl.interestCards(page.id)">{{page.id}}</a></li>
                   <li>
                     <a href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>

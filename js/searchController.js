@@ -84,7 +84,7 @@ myApp.controller('searchCtrl',function($http, $q,$location, searchService, notif
     console.log("Reached onClickNotif function");
     console.log(vm.notifArr);
     for(var i = 0; i < vm.notifArr.length; i++){
-      if((vm.notifArr[i].ntype === 'requeststatus' || vm.notifArr[i].ntype === 'discussion') && vm.notifArr[i].state === 'unread'){
+      if((vm.notifArr[i].ntype === 'requeststatus') && vm.notifArr[i].state === 'unread'){
         console.log("For ",vm.notifArr[i].nid);
         url = "http://localhost:8082/v1.0/notification/markread/"+vm.notifArr[i].nid;
         var status_deferred = $q.defer();

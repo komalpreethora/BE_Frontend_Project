@@ -105,14 +105,15 @@
       </div>
     </div>
     <div ng-if="$ctrl.expert_flag == false">
-      <p> No experts belong to the tags you have selected!</p>
+      <p>Sorry our system has no experts for the tags you have selected!</p>
+      <button type="submit" class="btn btn-primary" id="submit" ng-click="$ctrl.changeView('/home')">Go to Home &rarr;</button>
     </div>
 
     <center>
       <!-- Remove a href, just for redirection purpose-->
-      <button type="submit" class="btn btn-primary" id="submit" ng-click="$ctrl.submitExperts()"> Ask Question </button>
+      <button type="submit" class="btn btn-primary" id="submit"  ng-if="$ctrl.expert_flag == true" ng-click="$ctrl.submitExperts()"> Ask Question </button>
       <br>
-      <div ng-if="$ctrl.error_flag == true">
+      <div ng-if="$ctrl.error_flag == true &&  $ctrl.expert_flag == true">
         <p>You haven't selected any experts to answer your query!</p>
       </div>
     </center>

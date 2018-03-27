@@ -382,7 +382,7 @@ myApp.controller('settingsCtrl',function($scope,$q,$http,$cookies,$location,sear
     console.log("Reached onClickNotif function");
     console.log($scope.notifArr);
     for(var i = 0; i < $scope.notifArr.length; i++){
-      if(($scope.notifArr[i].ntype === 'requeststatus' || $scope.notifArr[i].ntype === 'discussion') && $scope.notifArr[i].state === 'unread'){
+      if(($scope.notifArr[i].ntype === 'requeststatus') && $scope.notifArr[i].state === 'unread'){
         console.log("For ",$scope.notifArr[i].nid);
         url = "http://localhost:8082/v1.0/notification/markread/"+$scope.notifArr[i].nid;
         var status_deferred = $q.defer();

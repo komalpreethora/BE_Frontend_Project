@@ -1,4 +1,4 @@
-myApp.controller('homeCtrl',function($scope, $http, $q, $cookies, $location, notifications, searchService){
+myApp.controller('homeCtrl',function($scope, $http, $q, $cookies, $location, $uibModal, notifications, searchService, session){
 
   //*TO-DO: Use constant URLs or use a URL builder
   var vm = this;
@@ -180,6 +180,7 @@ myApp.controller('homeCtrl',function($scope, $http, $q, $cookies, $location, not
       vm.notif_length = vm.return_notif.len;
       vm.notif_flag = true;
       vm.notifArr = vm.return_notif.notifArr;
+      console.log("Received notifArr as: ",vm.notifArr);
     }
   });
 
@@ -297,7 +298,7 @@ myApp.controller('homeCtrl',function($scope, $http, $q, $cookies, $location, not
     console.log("Reached onClickNotif function");
     console.log(vm.notifArr);
     for(var i = 0; i < vm.notifArr.length; i++){
-      if((vm.notifArr[i].ntype === 'requeststatus' || vm.notifArr[i].ntype === 'discussion') && vm.notifArr[i].state === 'unread'){
+      if((vm.notifArr[i].ntype === 'requeststatus') && vm.notifArr[i].state === 'unread'){
         console.log("For ",vm.notifArr[i].nid);
         url = "http://localhost:8082/v1.0/notification/markread/"+vm.notifArr[i].nid;
         var status_deferred = $q.defer();
@@ -315,6 +316,11 @@ myApp.controller('homeCtrl',function($scope, $http, $q, $cookies, $location, not
     }
   };
 
+  vm.startModal = function(qid, other_userid){
+    //pass qid, userid, other_userid for connecting with websocket
+    console.log("in startmodal");
+  };
+
   vm.logoutUser = function(){
     $cookies.remove('userId');
     vm.changeView('/');
@@ -324,4 +330,127 @@ myApp.controller('homeCtrl',function($scope, $http, $q, $cookies, $location, not
     $location.path(newView);
   }
 
+  //TESTING modal
+  vm.animationsEnabled = true;
+  //function to open modal and also create session
+  vm.open = function (size, qid, title, otheruserid, otherusername) {
+    console.log("Received ",qid,", ",otheruserid," and ",otherusername," for modal!");
+
+    vm.sessionid = 0;
+    vm.username = $cookies.get('userName');
+    //console.log("Got username: ",vm.username);
+    //--Connect this user and other user and also send() to generate sessionid for further messages
+    connect(vm.username, vm.userid, otherusername, otheruserid, qid);
+
+    //--Remove when want to make static
+    url = "http://localhost:8083/sessionid/"+vm.userid+"/"+otheruserid+"/"+qid;
+    var session_deferred = $q.defer();
+
+    $http.get(url)
+    .then(function(api_session_response)
+    {
+      session_deferred.resolve(api_session_response);
+    })
+    .catch(function(api_session_response){
+      session_deferred.reject(api_session_response);
+    });
+
+    session_deferred.promise.then(function(api_session_response){
+      vm.sessionid = session.getSessionId(api_session_response);
+      console.log("Connecting users: ",vm.userid,":",vm.username," and ",otheruserid,":",otherusername," for sessionid: ",vm.sessionid);
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'myModalContent.html',
+        controller: 'ModalInstanceCtrl',
+        controllerAs: '$ctrl',
+        size: size,
+        appendTo: undefined,
+        resolve: {
+          qid: function(){
+            return qid;
+          },
+          quesTitle: function(){
+            return title;
+          },
+          userid: function(){
+            return vm.userid;
+          },
+          otheruserid: function(){
+            return otheruserid;
+          },
+          sessionid: function(){
+            return vm.sessionid; //2;
+          }
+        }
+      });
+
+      //result is resolved when modal is closed and rejected when modal is dismissed
+      modalInstance.result.then(function (selectedItem) {
+        vm.selected = selectedItem;
+      }, function () {
+      //  console.log('Modal dismissed at: ' + new Date());
+      });
+    });
+  };
+
+});
+
+var scopeHolder;
+myApp.controller('ModalInstanceCtrl', function ($http, $q, $uibModalInstance, qid, quesTitle, userid, otheruserid, sessionid) {
+  scopeHolder = this;
+  var $ctrl = this;
+
+  $ctrl.messages = []; //for storing all text received in the websocket
+  $ctrl.textToSend = "";
+  $ctrl.qid = qid;
+  $ctrl.quesTitle = quesTitle;
+  $ctrl.owneruserid = userid;
+  $ctrl.otheruserid = otheruserid;
+  $ctrl.sessionid = sessionid;
+  $ctrl.sendText = function(){
+
+  //Sessionid for now is 2 only
+  console.log("Received so much: ",qid, quesTitle, userid, otheruserid, sessionid);
+
+    //for testing purposes 2,6 userids are considered
+    //console.log("-->Text to send is: ",$ctrl.textToSend);
+    //console.log("Sending from ",$ctrl.owneruserid," to ",$ctrl.otheruserid);
+    sendName($ctrl.sessionid, $ctrl.owneruserid,$ctrl.otheruserid, $ctrl.textToSend);
+
+    //clear textarea after clicking send button
+    $ctrl.textToSend="";
+  };
+
+  $ctrl.appendMsg = function(sender, message, receiver){
+
+    console.log("Sending ",message," from ",sender," to ",receiver);
+    if(sender == $ctrl.owneruserid)
+    {
+      $ctrl.messages.push({
+        text: message,
+        type: 1
+      });
+    }
+    else {
+      $ctrl.messages.push({
+        text:message,
+        type: 2
+      })
+    }
+    console.log("Messages: ",$ctrl.messages);
+  };
+
+  $ctrl.ok = function () {
+    //console.log("Hi I'm okay")
+    //Closing session by calling disconnect
+    disconnect();
+    $uibModalInstance.close();
+  };
+
+  $ctrl.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
 });

@@ -47,12 +47,15 @@
       <h4>Notifications</h4>
     </div>
     <br><br>
-    <div class="aligncenter" ng-repeat="notification in $ctrl.notifArr">
+    <div ng-if="$ctrl.notif_flag == false">
+      <p>No notifications available!</p>
+    </div>
+    <div ng-repeat="notification in $ctrl.notifArr">
 
       <!-- If notifications are unread -->
       <!-- <span style="background-color: #60d164"> -->
       <div ng-if="notification.state === 'unread'">
-        <h6>Unread</h6>
+        <p><small style="color: grey;">Unread</small></p>
         <div ng-if="notification.ntype === 'seekerrequest'">
           <a ng-href={{notification.link}}><p>{{notification.message}}</p></a>
           <a ng-click="$ctrl.sessionStatus(notification.nid, $ctrl.userid, notification.qid, 1)"><i class="fa fa-check"  aria-hidden="true">Accept</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -63,8 +66,14 @@
           <a ng-href={{notification.link}} ng-click="$ctrl.notifStatus(notification.nid)"><p>{{notification.message}}</p></a>
         </div>
 
-        <div ng-if="notification.ntype ==='requeststatus' || notification.ntype === 'discussion'">
+        <div ng-if="notification.ntype ==='requeststatus'">
           <p>{{notification.message}}</p>
+        </div>
+
+        <div ng-if="notification.ntype === 'discussion'">
+          <p>{{notification.message}}</p>
+          <a ng-click="$ctrl.startModal(notification.qid, notification.userid)"><i class="fa fa-check" style="float: left;" aria-hidden="true">Start Session</i></a>
+          <br>
         </div>
       </div>
 
@@ -72,7 +81,7 @@
 
       <!-- If notifications are read -->
       <div ng-if="notification.state === 'read'">
-        <h6>Read</h6>
+        <p><small style="color: grey;">Read</small></p>
         <div ng-if="notification.ntype === 'seekerrequest'">
           <a ng-href={{notification.link}}><p>{{notification.message}}</p></a>
         </div>
@@ -84,8 +93,6 @@
           <p>{{notification.message}}</p>
         </div>
       </div>
-
-      <hr>
 
     </div>
 

@@ -66,7 +66,21 @@ myApp.factory('searchService',function(){
 	}
 });
 
-//--Service for handling notifications
+//--Factory for getting session id from response of http request
+myApp.factory('session',function(){
+	var sessionid = 0;
+
+	function getSessionId(api_response){
+		sessionid = api_response.data;
+		return sessionid;
+	}
+
+	return{
+		getSessionId: getSessionId
+	}
+});
+
+//--Factory for handling notifications
 myApp.factory('notifications',function($http, $q){
 	//returns array of notifications (max. 3) belonging to this user
 	function getNotifications(userid, api_notif_response){
@@ -82,7 +96,6 @@ myApp.factory('notifications',function($http, $q){
 						break;
 					else{
 						notif_len++;
-						console.log("ith- ",i,":",api_notif_response.data[i]);
 						if(api_notif_response.data[i].state === "unread"){
 							notif_len++;
 							var msg = "";
@@ -97,18 +110,27 @@ myApp.factory('notifications',function($http, $q){
 								temp_link = "#!/question/"+api_notif_response.data[i].questionid;
 							}
 							else if(api_notif_response.data[i].ntype === "requeststatus"){
-								msg = "Expert "+api_notif_response.data[i].username+" has accepted your session request for question: '"+api_notif_response.data[i].questiontitle+"'";
+								if(api_notif_response.data[i].negotiationStatus === "accept"){
+									msg = "Expert "+api_notif_response.data[i].username+" has accepted your session request for question: '"+api_notif_response.data[i].questiontitle+"'";
+									console.log("msg ",msg," state: ",api_notif_response.data[i].negotiationStatus);
+								}
+								else {
+									msg = "Expert "+api_notif_response.data[i].username+" has rejected your session request for question: '"+api_notif_response.data[i].questiontitle+"'";
+								}
 								temp_link = null;
 							}
 							else{
-								msg = "Your session for question: '"+api_notif_response.data[i].questiontitle+"' is now starting!";
+								msg = "Your session for question: '"+api_notif_response.data[i].questiontitle+"' is now starting with "+api_notif_response.data[i].username+"!";
 								temp_link = null;
 							}
 
 							notif_arr.push({
+								otherusername: api_notif_response.data[i].username,
+								otheruserid: api_notif_response.data[i].userid,
 								ntype: api_notif_response.data[i].ntype,
 								nid: api_notif_response.data[i].notificationid,
 								qid: api_notif_response.data[i].questionid,
+								title: api_notif_response.data[i].questiontitle,
 								state: api_notif_response.data[i].state,
 								message: msg,
 								link: temp_link
@@ -152,8 +174,12 @@ myApp.factory('notifications',function($http, $q){
 						temp_link = "#!/question/"+api_notif_response.data[i].questionid;
 					}
 					else if(api_notif_response.data[i].ntype === "requeststatus"){
-						msg = "Expert "+api_notif_response.data[i].username+" has accepted your session request for question: '"+api_notif_response.data[i].questiontitle+"'";
-						temp_link = null;
+						if(api_notif_response.data[i].negotiationStatus === "accept"){
+							msg = "Expert "+api_notif_response.data[i].username+" has accepted your session request for question: '"+api_notif_response.data[i].questiontitle+"'";
+						}
+						else {
+							msg = "Expert "+api_notif_response.data[i].username+" has rejected your session request for question: '"+api_notif_response.data[i].questiontitle+"'";
+						}
 					}
 					else{
 						msg = "Your session for question: '"+api_notif_response.data[i].questiontitle+"' is now starting!";
@@ -166,7 +192,9 @@ myApp.factory('notifications',function($http, $q){
 						qid: api_notif_response.data[i].questionid,
 						state: api_notif_response.data[i].state,
 						message: msg,
-						link: temp_link
+						link: temp_link,
+						otherusername: api_notif_response.data[i].username,
+						otheruserid: api_notif_response.data[i].userid
 					});
 				};//end of for
 				returnobj = {
@@ -180,12 +208,9 @@ myApp.factory('notifications',function($http, $q){
 					len: 0
 				};
 			}
-			console.log("Returning object: ",returnobj);
+			console.log("Returning allNotif object: ",returnobj);
 			return returnobj;
 	};
-
-
-
 
 	//for changing negotiation message status as accepted or rejected
 	//1-accept

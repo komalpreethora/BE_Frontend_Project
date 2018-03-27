@@ -25,7 +25,6 @@
   <header class="masthead">
     <div class="container">
       <div class="intro-text">
-        <div class="intro-lead-in">Welcome To Our Site!</div>
         <div class="intro-heading text-uppercase">Have a problem you need solved ?</div>
         <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#about">Tell Me More</a>
       </div>
@@ -155,7 +154,7 @@
 
             </div>
           </form>
-          <div ng-if="$ctrl.error_flag == true">
+          <div ng-if="$ctrl.error_flag == false">
             <p class="text-center" style="color: white;">{{$ctrl.msg}}</p>
           </div>
           <div ng-if="$ctrl.missing_flag == true">

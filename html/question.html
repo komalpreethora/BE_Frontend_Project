@@ -103,7 +103,7 @@
 
           </div>
           <div class="col-md-offset-1 ">
-            <p><pre>{{$ctrl.quesText}}</pre></p>
+            <p style="white-space: pre; overflow:auto;">{{$ctrl.quesText}}</p>
           </div>
 
           <div class="row">
@@ -136,7 +136,7 @@
               </button>
             </div>
             <div class="col-md-offset-1">
-              <p><pre>{{ans.answerText}}</pre></p>
+              <p style="white-space: pre; overflow:auto;">{{ans.answerText}}</p>
             </div>
 
             <div class="row">
@@ -163,7 +163,7 @@
         <button type="submit" class="btn btn-primary" id="submit" ng-disabled="$ctrl.ansText_flag" ng-click="$ctrl.submitAnswer()"> Submit Answer </button>
         <div ng-if="$ctrl.flag_msg == true">
           &nbsp;
-          <p>{{$ctrl.msg}}</p>
+          <p style="white-space: pre;">{{$ctrl.msg}}</p>
         </div>
         <div ng-if="$ctrl.ansText_flag">
           <p>Your answer has been submitted!</p>

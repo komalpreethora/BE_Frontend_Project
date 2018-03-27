@@ -21,6 +21,7 @@
     <!-- Custom styles for this template -->
     <link href="css/theme.css" rel="stylesheet">
     <link href="css/agency.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
      <!-- font icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -56,6 +57,51 @@
     <div ng-view>
     </div>
 
+    <!-- template for modal -->
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">{{$ctrl.quesTitle}}</h3>
+        </div>
+
+        <div class="modal-body" style="overflow-y: auto; height:450px;" id="modal-body">
+          <div ng-repeat="msg in $ctrl.messages">
+            <div ng-if="msg.type == 1">
+              <div class="talk-bubble tri-right round left-in col-md-12">
+               <div class="talktext">
+                 <p>{{msg.text}}</p>
+               </div>
+              </div>
+            </div>
+
+            <div ng-if="msg.type == 2">
+              <div class="talk-bubble tri-right round right-in">
+                <div class="talktext">
+                  <p>{{msg.text}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      <!--end modal body here-->
+
+       <div class="modal-footer">
+         <center>
+           <div class="row">
+             <div class="col-md-10">
+               <textarea class="form-control tri-right right-in textpad" rows="1" placeholder="Your message here" ng-model="$ctrl.textToSend"></textarea>
+             </div>
+             <button type="submit" class="btn btn-primary btnpad" ng-click="$ctrl.sendText()">Send Text</button>
+           </div>
+         </center>
+
+         <br>
+         <button type="submit" class="btn btn-danger col-md-12" ng-click="$ctrl.ok()"> End Chat </button>
+       </div>
+    </script>
+    <!-- end of modal template -->
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-animate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-sanitize.min.js"></script>
@@ -63,6 +109,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-cookies.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.2/sockjs.min.js"></script>
     <script src="dist/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="js/app.js"></script>
@@ -74,6 +122,7 @@
     <script type="text/javascript" src="js/expertsController.js"></script>
     <script type="text/javascript" src="js/notificationsController.js"></script>
     <script type="text/javascript" src="js/searchController.js"></script>
+    <script type="text/javascript" src="js/modalController.js"></script>
   </body>
 
 </html>
